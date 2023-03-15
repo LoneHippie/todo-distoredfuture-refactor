@@ -1,6 +1,6 @@
-import { initializeApp } from "@firebase/app";
-import { getFirestore } from "@firebase/firestore";
-import { getAuth } from "@firebase/auth";
+import { initializeApp } from '@firebase/app';
+import { getFirestore } from '@firebase/firestore';
+import { getAuth } from '@firebase/auth';
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -8,13 +8,13 @@ import { getAuth } from "@firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
-  apiKey: "AIzaSyALXrOq0eTBU0aTp-3pPiSJZ-IP3AVpyTY",
-  authDomain: "todo-c1b9b.firebaseapp.com",
-  projectId: "todo-c1b9b",
-  storageBucket: "todo-c1b9b.appspot.com",
-  messagingSenderId: "1045643693433",
-  appId: "1:1045643693433:web:2d025d1ef02134026033a8",
-  measurementId: "G-0ZBYK8Z98V"
+   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+   authDomain: 'todo-c1b9b.firebaseapp.com',
+   projectId: 'todo-c1b9b',
+   storageBucket: 'todo-c1b9b.appspot.com',
+   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+   appId: process.env.REACT_APP_FIREBASE_APP_ID,
+   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

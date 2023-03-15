@@ -1,70 +1,21 @@
-# Getting Started with Create React App
+# Big ol' refactor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## General architecture changes
 
-## Available Scripts
+-  Changed all files that return a React JSX Element to `.jsx`. This becomes more useful with Typescript when you can use `.ts` vs `.tsx` which will let the compiler know if the file needs to have the line `import React from 'react'` included to compile JSX code.
 
-In the project directory, you can run:
+-  Split files into several sections: components (for components), contexts which in React architecture is a good place to put providers that can wrap `App.jsx` like themes and routers, or API classes/functions, and views for each page
 
-### `npm start`
+-  Moved api keys and other private strings to a `.env` file so they won't be commited and visible in public repositories. You can add these env values back in services like Netlify in the website options (eg. `REACT_APP_FIREBASE_API_KEY = "my totally secret key"`) so you can keep sensitive strings hidden
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Component level changes
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-  Moved component logic into hooks within the same directories as the components themselves, then exported the components through a index file in that directory. This lets you put your component, styling and logic (via a custom hook) in a dir under the component name, then import directly from the folder itself since the index file default exports the component.
 
-### `npm test`
+-  In general, unless you have a very small amount of logic going on in a component (like a setState for a boolean or two) you should try to extract that logic into a hook to be used in that component. Same if you have a lot of styling that could take up lots of space in the file.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-  Destructured props (`const Component = (props) => {}` to `const Component = ({prop1, prop2, prop3, etc}) => {}`). This pattern makes it much easier to keep track of which props each component has access to and is a recommended pattern when using Typescript with React. In general you should avoid accessing props through `props.propName`
 
-### `npm run build`
+## Bonus thing
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-  Also added a `.prettierrc` file. Super useful for keeping code organized, auto formats everything on save based on what options you pass to the config, not only necessary for working with teams to keep code style consistent but really helps prevent confusion on HTML/element nesting
